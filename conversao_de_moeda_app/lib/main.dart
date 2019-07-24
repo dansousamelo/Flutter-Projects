@@ -7,8 +7,8 @@ const request = "https://api.hgbrasil.com/finance?key=eab1a881";
 
 void main() async {
   runApp(MaterialApp(
-    home: Home(),
-  ));
+      home: Home(),
+      theme: ThemeData(hintColor: Colors.amber, primaryColor: Colors.white)));
 }
 
 Future<Map> getData() async {
@@ -22,6 +22,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  double real;
+  double euro;
+  double dolar;
+
+  final dolarController = TextEditingController();
+  final euroController = TextEditingController();
+  final realController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,12 +63,44 @@ class _HomeState extends State<Home> {
                     ),
                   );
                 } else {
-                  return Container(
-                    color: Colors.green,
+                  dolar = snapshot.data["results"]["currencies"]["USD"]["buy"];
+                  dolar = snapshot.data["results"]["currencies"]["USD"]["buy"];
+                  return SingleChildScrollView(
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Icon(
+                          Icons.monetization_on,
+                          size: 150.0,
+                          color: Colors.amber,
+                        ),
+                        buildTextField("Real", "R\$", realController),
+                        Divider(),
+                        buildTextField("Dólar", "US\$", dolarController),
+                        Divider(),
+                        buildTextField("Euro", "€", euroController),
+                      ],
+                    ),
                   );
                 }
             }
           }),
     );
   }
+
+}
+Widget buildTextField(String label, String prefix, TextEditingController c){
+  return TextField(
+    decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.amber),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.amber)),
+        border: OutlineInputBorder(),
+        prefixText: prefix),
+    style: TextStyle(color: Colors.amber, fontSize: 25.0),
+  );
 }
