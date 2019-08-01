@@ -71,7 +71,6 @@ class _HomeState extends State<Home> {
     dolarController.text = (euro * this.euro / dolar).toStringAsFixed(2);
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
